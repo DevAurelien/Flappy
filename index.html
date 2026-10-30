@@ -5,6 +5,12 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./src/assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chewy&display=swap"
+      rel="stylesheet"
+    />
     <title>Flappy</title>
   </head>
   <body>
@@ -18,12 +24,24 @@
         </div>
 
         <div class="bottom-container">
-          <!-- Stats et scores  -->
+          <!-- Scores  -->
 
-          <p class="level" id="level"></p>
-          <div class="divBtn">
-            <button class="btn_scores" id="scores">Scores</button>
-            <button class="btn_stats" id="stats">Stats</button>
+          <p class="level" id="level">1</p>
+          <div class="div-Btn">
+            <div id="div-scores">
+              <div id="score">
+                <img src="./src/assets/scores/etoile.png" alt="Etoile" />
+                <span>SCORE</span>
+              </div>
+              <div id="distance">
+                <img src="./src/assets/scores/drapeau.png" alt="Drapeau" />
+                <span>DISTANCE</span>
+              </div>
+              <div id="temps">
+                <img src="./src/assets/scores/chrono.png" alt="Chrono" />
+                <span>TEMPS</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
