@@ -1,28 +1,42 @@
+
+/*************************
+  CONFIGURATION GLOBALE
+*************************/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  overflow-y: auto;
+  width: 100%;
+  min-height: 100vh;
+
   overflow-x: hidden;
+  overflow-y: auto;
+
   background: radial-gradient(
     ellipse at 50% 45%,
     #304650 0%,
     #1c303d 45%,
     #101e29 100%
   );
-  width: 100%;
 }
 
 #app {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 100%;
-  flex-direction: column;
 }
 
-/***********
-Container
-*************
-*/
+/*************************
+  CONTAINERS
+*************************/
 
 .container {
   display: flex;
@@ -34,26 +48,35 @@ Container
 
 .game-container {
   position: relative;
+  max-width: 100%;
 }
 
-/*container scores, stats et levels*/
+/* Zone scores, stats et niveau */
+
 .bottom-container {
-  width: 90%;
-  margin: 0 auto;
-  box-sizing: border-box;
   position: relative;
+
+  width: 90%;
   min-height: 150px;
+  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
-  font-family: chewy;
+
+  font-family: "Chewy", sans-serif;
 }
 
+/*************************
+  CANVAS
+*************************/
+
 #canvas {
-  display: flex;
+  display: block;
   max-width: 100%;
-  box-sizing: border-box;
+  height: auto;
+
   background: radial-gradient(
     ellipse at 50% 35%,
     #344d81 0%,
@@ -61,66 +84,51 @@ Container
     #192542 70%,
     #101827 100%
   );
+
   border: 3px solid #658cda;
   border-radius: 38px;
+
   box-shadow:
     inset 0 0 25px rgba(117, 87, 255, 0.15),
     0 12px 30px rgba(0, 0, 0, 0.3),
     0 28px 55px rgba(0, 0, 0, 0.4);
 }
 
-/* h1 {
-  position: absolute;
-  left: 0;
-  right: 0;
-  font-family: Arial, sans-serif;
-  color: #333;
-  margin-bottom: 20px;
-  width: 100%;
-  text-align: center;
-  font-family: "Arial Black", sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #8cddff;
-  text-shadow:
-    0 1px 0 #d8f7ff,
-    0 2px 0 #4cb9f2,
-    0 3px 0 #238fce,
-    0 4px 0 #15699e,
-    0 5px 0 #0b4778,
-    0 8px 10px rgba(0, 0, 0, 0.5),
-    0 15px 25px rgba(0, 0, 0, 0.35);
-  animation: floatingTitle 3s ease-in-out infinite;
-} */
+/*************************
+  LOGO
+*************************/
 
-/* ici le logo*/
 .titre {
   display: block;
+
   width: 90%;
   max-width: 550px;
   height: auto;
+
   margin: 0 auto;
   padding: 2% 0;
-  animation: floatingBounce 5s ease-out infinite alternate;
+
+  animation: floatingBounce
+    5s ease-out infinite alternate;
 }
 
-/* ici le paragraphe pour afficher les levels */
+/*************************
+  MÉDAILLON DE NIVEAU
+*************************/
 
 p.level {
   width: clamp(65px, 6vw, 100px);
   aspect-ratio: 1 / 1;
-  box-sizing: border-box;
+  flex-shrink: 0;
+
   margin: 0;
-  transform: translateY(-30%);
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border-radius: 22px;
   border: 3px solid #e7b64e;
+  border-radius: 22px;
 
   background: linear-gradient(
     145deg,
@@ -128,15 +136,14 @@ p.level {
     #7136ce 35%,
     #3a1c78 75%,
     #190f42 100%
-  
   );
-  animation: floatinglvl 3s ease-out infinite alternate;
 
   color: #fff4cb;
-  font-family: "Arial Black", Arial, sans-serif;
-  font-size: clamp(0.65rem, 1.2vw, 0.9rem);
+  font-family: "Chewy", sans-serif;
+  font-size: clamp(1.2rem, 2vw, 2rem);
   font-weight: 900;
   text-align: center;
+
   text-shadow: 0 2px 4px #170b36;
 
   box-shadow:
@@ -145,75 +152,83 @@ p.level {
     0 5px 0 #795022,
     0 8px 18px rgba(0, 0, 0, 0.45),
     0 0 18px rgba(151, 76, 255, 0.35);
-  font-family: chewy;
-  font-size: 2.5rem;
+
+  animation: floatinglvl
+    3s ease-in-out infinite alternate;
 }
 
+/*************************
+  CONTAINER DES BOUTONS
+*************************/
 
 .div-Btn {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+
+  width: 100%;
   gap: clamp(5px, 2vw, 28px);
   padding: 12px;
-  width: 100%;
 }
 
-/***********
-Animations
-*************
-*/
+/*************************
+  ANIMATIONS
+*************************/
 
 @keyframes floatingBounce {
   0% {
     transform: translateY(0) scale(1);
   }
+
   50% {
     transform: translateY(-14px) scale(1.05);
   }
+
   100% {
     transform: translateY(0) scale(1);
   }
 }
+
 @keyframes floatinglvl {
   0% {
-    transform: translateY(-7) scale(1);
+    transform: translateY(-30%) scale(1);
   }
+
   50% {
-    transform: translateY(-14px) scale(1.02);
+    transform: translateY(-40%) scale(1.02);
   }
+
   100% {
-    transform: translateY(-7) scale(1);
+    transform: translateY(-30%) scale(1);
   }
 }
 
-/*
-Media query
-*/
-@media (max-width: 900px) {
-    #div-scores span {
-        display: none;
-    }
-}
+/*************************
+  BOUTON JOUER
+*************************/
 
-
-
-/***********
-Bouton
-*************
-*/
-
-.btn_jouer {
+.btn-jouer {
   position: absolute;
   top: 50%;
   left: 50%;
-  translate: calc(-50%);
-  border: 2px black solid;
-  height: 5vh;
-  width: 15vh;
-  background: linear-gradient(180deg, #ffcf39 0%, #ff9700 45%, #ed5700 100%);
+
+  transform: translate(-50%, -50%);
+
+  width: clamp(120px, 15vh, 190px);
+  min-height: 50px;
+  padding: 8px 12px;
+
+  background: linear-gradient(
+    180deg,
+    #ffcf39 0%,
+    #ff9700 45%,
+    #ed5700 100%
+  );
+
   border: 4px solid #a94800;
   border-radius: 1000px;
+
   box-shadow:
     inset 0 5px 3px rgba(255, 255, 255, 0.65),
     inset 0 -7px 0 rgba(128, 48, 0, 0.35),
@@ -221,47 +236,69 @@ Bouton
     0 13px 22px rgba(0, 0, 0, 0.3);
 
   color: white;
-  font-weight: 1000;
+  font-family: "Chewy", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 900;
   text-shadow: 0 3px 0 #8f3900;
+
   cursor: pointer;
+
   transition:
-    transform 0.12s,
-    box-shadow 0.12s;
-  font-family: chewy;
-  font-size: 1.5rem;
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
 }
 
-.btn_jouer:active {
-  transform: translateY(6px);
+.btn-jouer:hover {
+  filter: brightness(1.1);
+}
+
+.btn-jouer:active {
+  transform: translate(-50%, calc(-50% + 6px));
+
   box-shadow:
     inset 0 3px 8px rgba(0, 0, 0, 0.25),
     0 2px 0 #853a00;
 }
-/* #score {
-  
-} */
 
-#div-scores {
-  min-width: clamp(110px, 15vw, 190px);
-  min-height: 52px;
-  padding: 10px 20px;
+/*************************
+  STYLE COMMUN
+  SCORES ET STATS
+*************************/
+
+#div-scores,
+.btn-scores,
+.btn-stats {
+  min-height: 70px;
+  padding: 10px 15px;
 
   border-radius: 12px;
-  font-family: "Arial Black", Arial, sans-serif;
-  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-  font-weight: 900;
+
   color: #fff8e8;
+  font-family: "Chewy", sans-serif;
+  font-size: clamp(0.8rem, 2vw, 1.5rem);
+  font-weight: 900;
 
-  cursor: pointer;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
-
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    filter 0.18s ease;
+  text-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.7);
 }
 
-#div-scores {
+/*************************
+  PANNEAU SCORES
+*************************/
+
+#div-scores,
+.btn-scores {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  align-items: center;
+
+  width: 100%;
+  gap: 0;
+
   background: linear-gradient(
     180deg,
     #ffe49a 0%,
@@ -269,69 +306,198 @@ Bouton
     #f77b00 60%,
     #a83a08 100%
   );
-  width: 100%;
+
   border: 3px solid #d99635;
+
   box-shadow:
     inset 0 3px 2px rgba(255, 255, 255, 0.65),
     inset 0 -5px 0 rgba(112, 39, 0, 0.35),
     0 6px 0 #692a11,
     0 10px 18px rgba(0, 0, 0, 0.35);
-  display: grid;
-  grid-template-columns: repeat(3, 33%);
-  gap: 2rem;
-  height: 100%;
-  font-family: chewy;
-  font-size: clamp(0.8rem, 2vw, 1.5rem);
 }
 
+/*************************
+  CONTENU DES SCORES
+*************************/
 
-#div-scores img{
-  width: clamp(24px, 6.25vw, 48px);
-  height: auto;
-}
+/* SCORE - DISTANCE - TEMPS */
 
-#div-scores div{
+#div-scores > div {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+
   position: relative;
-} 
+  min-width: 0;
 
-#div-scores > div:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 10%;
-    height: 80%;
-    width: 3px;
-    border-radius: 3px;
-
-    background: linear-gradient(
-        to bottom,
-        #C76500,
-        #FFE67B,
-        #FFF3BA,
-        #FFC32B,
-        #AD4800
-    );
-
-    box-shadow: 0 0 5px #FFE6A0;
+  gap: 0.5rem;
+  padding: 5px 8px;
 }
 
-/*
-#div_scores:hover {
+/* Icônes */
+
+#div-scores img {
+  display: block;
+
+  width: clamp(24px, 6.25vw, 48px);
+  height: auto;
+
+  flex-shrink: 0;
+}
+
+/* Texte */
+
+#div-scores span {
+  font-family: "Chewy", sans-serif;
+  white-space: nowrap;
+}
+
+/*************************
+  SÉPARATEURS DORÉS
+*************************/
+
+#div-scores > div:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+  right: 0;
+  top: 10%;
+
+  width: 3px;
+  height: 80%;
+
+  border-radius: 3px;
+
+  background: linear-gradient(
+    to bottom,
+    #c76500,
+    #ffe67b,
+    #fff3ba,
+    #ffc32b,
+    #ad4800
+  );
+
+  box-shadow:
+    0 0 5px #ffe6a0;
+}
+
+/*************************
+  PANNEAU STATS
+*************************/
+
+.btn-stats {
+  background: linear-gradient(
+    180deg,
+    #a6dcff 0%,
+    #428cde 15%,
+    #28488e 65%,
+    #192b5a 100%
+  );
+
+  border: 3px solid #78c9ff;
+
+  box-shadow:
+    inset 0 3px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -5px 0 rgba(5, 18, 61, 0.5),
+    0 6px 0 #101c43,
+    0 10px 18px rgba(0, 0, 0, 0.4);
+}
+
+/*************************
+  INTERACTIONS BOUTONS
+*************************/
+
+.btn-stats {
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.btn-stats:hover {
   transform: translateY(-3px);
   filter: brightness(1.12);
 }
- #div_scores:active {
+
+.btn-stats:active {
   transform: translateY(5px);
+
   box-shadow:
     inset 0 3px 8px rgba(0, 0, 0, 0.3),
     0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
-#div_scores:focus-visible {
-  outline: 3px solid #ffffff;
+/* Accessibilité clavier */
+
+.btn-jouer:focus-visible,
+.btn-stats:focus-visible {
+  outline: 3px solid white;
   outline-offset: 5px;
-} 
-*/
+}
+
+/*************************
+  RESPONSIVE
+*************************/
+
+@media (max-width: 900px) {
+  #div-scores span {
+    display: none;
+  }
+
+  #div-scores {
+    padding: 8px;
+  }
+
+  #div-scores > div {
+    padding: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  #canvas {
+    border-radius: 20px;
+  }
+
+  .bottom-container {
+    width: 90%;
+    min-height: 120px;
+  }
+
+  p.level {
+    border-radius: 15px;
+  }
+
+  .div-Btn {
+    gap: 10px;
+    padding: 8px;
+  }
+
+  #div-scores {
+    min-height: 60px;
+  }
+
+  #div-scores img {
+    width: 28px;
+  }
+
+  .btn-jouer {
+    min-height: 45px;
+  }
+}
+
+/*************************
+  RÉDUCTION DES ANIMATIONS
+*************************/
+
+@media (prefers-reduced-motion: reduce) {
+  .titre,
+  p.level {
+    animation: none;
+  }
+
+  p.level {
+    transform: translateY(-30%);
+  }
+}
