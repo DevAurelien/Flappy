@@ -2,12 +2,33 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/assets/css/style.css" />
     <title>Flappy</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <!-- <h1>Flappy Dimensions</h1> -->
+    <img class="titre" src="/titre.png" alt="Logo Flappy Dimensions" />
+    <div id="app">
+      <div class="container">
+        <div class="game-container">
+          <canvas id="canvas"></canvas>
+          <button class="btn_jouer">Jouer</button>
+        </div>
+
+        <div class="bottom-container">
+          <!-- Stats et scores  -->
+
+          <p class="level" id="level"></p>
+          <div class="divBtn">
+            <button class="btn_scores" id="scores">Scores</button>
+            <button class="btn_stats" id="stats">Stats</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>
