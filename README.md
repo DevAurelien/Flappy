@@ -1,6 +1,6 @@
 # Flappy Dimensions
 
-![FlappyDimensions](/src/assets/Écran%20de%20jeu%20Dimensions%20_%20chevalier%20volant.png)
+![FlappyDimensions](./src/assets/img/Écran%20de%20jeu%20Dimensions%20_%20chevalier%20volant.png)
 
 **Flappy Dimensions** est un jeu d'arcade 2D sur navigateur, développé à deux par **DevAurelien (Aurélien)** et **Tosbas (Thomas)**.
 

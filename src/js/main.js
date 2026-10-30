@@ -1,36 +1,26 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+import Canvas from "./Canvas";
+import Player from "./Player";
+import GameEvent from "./GameEvent";
+import World from "./World";
 
-// canvas.width = Math.min(window.innerWidth * 0.8, 800);
-// canvas.height = Math.min(window.innerHeight * 0.8, 600);
+Canvas.resize();
 
-// window.addEventListener("resize", () => {
-//   canvas.width = Math.min(window.innerWidth * 0.8, 800);
-//   canvas.height = Math.min(window.innerHeight * 0.8, 600);
-// });
+Player.init(Canvas, Canvas.ctx);
+GameEvent.init(Player);
 
+const game = (timestamp) => {
+    World.update(timestamp)
 
-const BASE_HEIGHT = 700;
-let scale;
-let largeurLogique;
+    Canvas.ctx.clearRect(0, 0, Canvas.width, Canvas.height);
 
-function resizeCanvas() {
-  const largeurDispo = window.innerWidth * 0.9;
-  const hauteurDispo = window.innerHeight * 0.7;
-  canvas.width = Math.floor(largeurDispo);
-  canvas.height = Math.floor(hauteurDispo);
-  scale = canvas.height / BASE_HEIGHT;
-  largeurLogique = canvas.width / scale;
-  }
+    if (GameEvent.startPlay) {
+        Player.update(World.deltaTime, World.gravity);
+        Player.draw();
+    }
 
+    requestAnimationFrame(game);
+};
 
+game(performance.now());
 
-resizeCanvas();
-
-
-
-window.addEventListener("resize", resizeCanvas);
-
-// sur pc, le joueur aura un espace
-//  plus large, mais la gravité et la taille
-//  du perso resteront cohérente à la hauteur du jeu
+window.addEventListener("resize", Canvas.resize);
