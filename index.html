@@ -22,31 +22,30 @@
           <canvas id="canvas"></canvas>
           <button id="btn-jouer" class="btn-jouer">Jouer</button>
         </div>
-
         <div class="bottom-container">
           <!-- Scores  -->
 
-          <p class="level" id="level">1</p>
+          <p class="level" id="affichage-level"></p>
           <div class="div-Btn">
             <div id="div-scores">
               <div id="score">
                 <img src="./src/assets/scores/etoile.png" alt="Etoile" />
-                <span>SCORE</span>
+                <span>SCORE</span><p id="affichage-score">125</p><span> points</span>
               </div>
               <div id="distance">
                 <img src="./src/assets/scores/drapeau.png" alt="Drapeau" />
-                <span>DISTANCE</span>
+                <span>DISTANCE</span><p id="affichage-distance">125</p><span> m</span>
               </div>
               <div id="temps">
                 <img src="./src/assets/scores/chrono.png" alt="Chrono" />
-                <span>TEMPS</span>
+                <span>TEMPS</span><p id="affichage-chrono">00:00:00</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/mainAurelien.js"></script>
   </body>
 </html>
