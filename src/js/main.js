@@ -1,7 +1,7 @@
-import Canvas from "./Canvas";
-import Player from "./Player";
-import GameEvent from "./GameEvent";
-import World from "./World";
+import Canvas from "./Canvas.js";
+import Player from "./Player.js";
+import GameEvent from "./GameEvent.js";
+import World from "./World.js";
 
 Canvas.resize();
 
