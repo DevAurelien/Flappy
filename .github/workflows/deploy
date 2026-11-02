@@ -1,0 +1,59 @@
+
+name: Deploy Flappy Dimensions
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # 1. Recuperer le projet depuis main
+      - name: Recuperer le projet
+        uses: actions/checkout@v4
+
+      # 2. Installer Node.js
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # 3. Installer les dependances
+      - name: Installer les dependances
+        run: npm ci
+
+      # 4. Compiler Vite pour GitHub Pages
+      - name: Compiler Flappy Dimensions
+        run: npm run build -- --base=/Flappy/
+
+      # 5. Configurer GitHub Pages
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # 6. Envoyer le dossier dist
+      - name: Preparer les fichiers
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "./dist"
+
+      # 7. Deployer le jeu
+      - name: Deployer Flappy Dimensions
+        id: deployment
+        uses: actions/deploy-pages@v4
