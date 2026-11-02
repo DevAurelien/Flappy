@@ -1,5 +1,5 @@
-const affichageScore = document.getElementById("affichage-score");
-const affichageLevel = document.getElementById("affichage-level");
+const scoreElement = document.getElementById("affichage-score");
+const levelElement = document.getElementById("affichage-level");
 
 export default class Score {
   /*
@@ -18,56 +18,56 @@ export default class Score {
   static timestamp = Date.now();
   static date = new Date(this.timestamp);
   //date.toLocaleDateString("fr-FR")
-  static dateActuelle = this.date.toLocaleDateString("fr-FR");
-  static niveauActuelle = 1;
+  static currentDate = this.date.toLocaleDateString("fr-FR");
+  static currentLevel = 1;
   static bonus = 0;
   static malus = 0;
-  static scoreActuel = 0;
-  static distanceActuelle = 0;
-  static dureeActuelle = 0;
-  static multiplicateur = 1;
-  static niveauTermineActuel = false;
+  static currentScore = 0;
+  static currentDistance = 0;
+  static currentDuration = 0;
+  static multiplier = 1;
+  static isCurrentLevelCompleted = false;
 
-  static meilleurDate = 0;
-  static meilleurScore = 0;
-  static meilleurDistance = 0;
-  static meilleurDuree = 0;
-  static meilleurNiveau = 1;
-  static meilleurTermine = false;
+  static bestDate = 0;
+  static bestScore = 0;
+  static bestDistance = 0;
+  static bestDuration = 0;
+  static bestLevel = 1;
+  static isBestLevelCompleted = false;
 
    /**
      * Initialise le scoreActuelle
      */
     static init() {
-    this.scoreActuel = 0;
+    this.currentScore = 0;
     this.recupererLocalStorage();
-    affichageLevel.innerHTML = `${this.niveauActuelle}`
+    levelElement.innerHTML = `${this.currentLevel}`
   }
 
-  static modifierScore() {}
+  static incrementScore() {}  // En cours d'etude ....voir pour les points des bonus et malus
   
-  static recupererLocalStorage() {
+  static loadFromLocalStorage() {
     if (!localStorage.getItem("DataJoueur")) return;
     const { date, score, distance, duree, niveau, termine } = JSON.parse(
       localStorage.getItem("DataJoueur"),
     );
-    this.meilleurDate = date;
-    this.meilleurScore = score;
-    this.meilleurDistance = distance;
-    this.meilleurDuree = duree;
-    this.meilleurNiveau = niveau;
-    this.meilleurTermine = termine;
+    this.bestDate = date;
+    this.bestScore = score;
+    this.bestDistance = distance;
+    this.bestDuration = duree;
+    this.bestLevel = niveau;
+    this.isBestLevelCompleted = termine;
   }
   
-  static envoyerLocalStorage() {
-    const objJoueur = {
-      date: this.dateActuelle,
-      score: this.scoreActuel,
-      distance: this.distanceActuelle,
-      duree: this.dureeActuelle,
-      niveau: this.niveauActuelle,
-      termine: this.niveauTermineActuel,
+  static saveToLocalStorage() {
+    const playerData = {
+      date: this.currentDate,
+      score: this.currentScore,
+      distance: this.currentDistance,
+      duree: this.currentDuration,
+      niveau: this.currentLevel,
+      termine: this.isCurrentLevelCompleted,
     };
-    localStorage.setItem("DataJoueur", JSON.stringify(objJoueur));
+    localStorage.setItem("DataJoueur", JSON.stringify(playerData));
   }
 }
