@@ -1,7 +1,13 @@
+import GameEvent from "./GameEvent.js";
+
 export default class Player {
 
     static sprite = new Image();
-    static ctx = null;
+
+    static isDead = false;
+
+    static canvasWidth = 0;
+    static canvasHeight = 0;
 
     static spriteUrl = './src/assets/heros/chevalier_1.png';
 
@@ -13,34 +19,33 @@ export default class Player {
     static vx = 0;
     static vy = 0;
 
-    static canvas = null;
+    static init(width, height) {
+        this.vy = 0;
+        this.isDead = false
 
-    /**
-     * Initialise le joueur
-     * @param {Canvas} canvas
-     * @param {CanvasRenderingContext2D} ctx 
-     */
-    static init(canvas, ctx) {
-        this.canvas = canvas;
-        this.canvasWidth = canvas.width;
-        this.canvasHeight = canvas.height;
-        this.x = this.canvasWidth / 2 - this.size / 2;
-        this.y = this.canvasHeight / 2 - this.size / 2;
-        this.ctx = ctx;
+        this.canvasWidth = width;
+        this.canvasHeight = height;
 
         this.sprite.onload = () => {
-            console.log('Player charger')
+            console.log("Sprite chargé :", this.sprite);
         };
 
         this.sprite.onerror = () => {
-            console.error("Impossible de charger le sprite.");
+            console.error("Impossible de charger le sprite :", this.spriteUrl);
         };
 
         this.sprite.src = this.spriteUrl;
+
+        this.initPosition();
     }
 
-    static draw() {
-        this.ctx.drawImage(
+    static initPosition() {
+        this.x = this.canvasWidth / 2 - this.size / 2;
+        this.y = this.canvasHeight / 2 - this.size / 2;
+    }
+
+    static draw(ctx) {
+        ctx.drawImage(
             this.sprite,
             this.x,
             this.y,
@@ -49,19 +54,30 @@ export default class Player {
         );
     }
 
-    static update(gravity) {
-        this.vy += gravity;
-        this.y += this.vy;
+    static update(deltaTime, gravity) {
+        const frameScale = deltaTime * 60;
+        if (!this.isOnGround) {
+            this.vy += gravity * frameScale;
+        }
 
+        this.y += this.vy * frameScale;
 
-        if(this.y + this.size > this.canvas.height){
+        if (this.y + this.size >= this.canvasHeight) {
+            this.y = this.canvasHeight - this.size;
             this.vy = 0;
+            this.die();
         }
     }
 
-    static jump(){
-        this.vy =- 2;
+    static die() {
+        if (this.isDead) return;
+
+        this.isDead = true;
+
+        GameEvent.emit("playerDeath");
     }
 
-
+    static jump() {
+        this.vy = -5;
+    }
 }

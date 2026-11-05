@@ -1,9 +1,13 @@
-export default class Canvas {
+import Player from "./Player";
+
+export default class Renderer {
+
+    // Canvas
     static canvas = document.getElementById("canvas");
     static ctx = this.canvas.getContext("2d");
 
+    // Dimensions
     static BASE_HEIGHT = 700;
-
     static scale = 0;
     static largeurLogique = 0;
 
@@ -17,7 +21,6 @@ export default class Canvas {
 
     /**
      * Permet de redimensionner le canvas
-     * @returns {void}
      */
     static resize() {
         const largeurDispo = window.innerWidth * 0.9;
@@ -28,5 +31,14 @@ export default class Canvas {
 
         this.scale = this.canvas.height / this.BASE_HEIGHT;
         this.largeurLogique = this.canvas.width / this.scale;
+    }
+
+    /**
+     * Dessine les éléments du jeu
+     */
+    static draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        Player.draw(this.ctx);
     }
 }

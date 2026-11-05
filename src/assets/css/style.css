@@ -16,10 +16,14 @@
   position: absolute;
   z-index: 10;
   padding: 38vh 4vw;
+  pointer-events: none;
   /* padding: 18vh 4vw; */
 }
 
+
+
 .cadre-overlay {
+  pointer-events: auto;
   border-radius: 2vw;
   height: 71vh;
   width: 92vw;
@@ -285,6 +289,8 @@ p.level {
   text-shadow: 0 3px 0 #8f3900;
 
   cursor: pointer;
+
+  z-index: 11;
 
   transition:
     transform 0.12s ease,
