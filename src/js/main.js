@@ -1,26 +1,20 @@
-import Canvas from "./Canvas";
-import Player from "./Player";
-import GameEvent from "./GameEvent";
-import World from "./World";
+import Game from "./Game.js";
+import GameEvent from "./GameEvent.js";
+import Renderer from "./Renderer.js";
+import Ui from "./Ui.js";
 
-Canvas.resize();
+Game.start();
 
-Player.init(Canvas, Canvas.ctx);
-GameEvent.init(Player);
+Ui.btnPlay.addEventListener("click", () => {
+    GameEvent.emit("startPlay", performance.now());
+});
 
-const game = (timestamp) => {
-    World.update(timestamp)
-
-    Canvas.ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-
-    if (GameEvent.startPlay) {
-        Player.update(World.deltaTime, World.gravity);
-        Player.draw();
+Ui.overlay.addEventListener("click", (e) => {
+    if (e.target.id === "btn-retry") {
+        GameEvent.emit("startPlay", performance.now());
     }
+});
 
-    requestAnimationFrame(game);
-};
-
-game(performance.now());
-
-window.addEventListener("resize", Canvas.resize);
+Renderer.canvas.addEventListener("click", () => {
+    GameEvent.emit("playerJump");
+});

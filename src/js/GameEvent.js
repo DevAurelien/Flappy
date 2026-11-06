@@ -1,28 +1,17 @@
 export default class GameEvent {
+    static events = {};
 
-    static startPlay = false;
+    static on(event, callback) {
+        if (!this.events[event]) {
+            this.events[event] = [];
+        }
 
-    static btnJouer = document.getElementById('btn-jouer');
-
-    static player = null;
-
-    static init(player) {
-        this.player = player;
-        this.bindEvent();
+        this.events[event].push(callback);
     }
 
-    static bindEvent() {
-
-        this.btnJouer.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.btnJouer.style.visibility = 'hidden';
-            this.startPlay = true;
-        })
-
-        document.addEventListener("click", (e) => {
-            if (this.startPlay) {
-                this.player.jump();
-            }
-        })
+    static emit(event, data) {
+        this.events[event]?.forEach(callback => {
+            callback(data);
+        });
     }
 }

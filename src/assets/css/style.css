@@ -1,4 +1,3 @@
-
 /*************************
   CONFIGURATION GLOBALE
 *************************/
@@ -9,15 +8,68 @@
   box-sizing: border-box;
 }
 
+#overlay {
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 10;
+  padding: 38vh 4vw;
+  pointer-events: none;
+  /* padding: 18vh 4vw; */
+}
+
+
+
+.cadre-overlay {
+  pointer-events: auto;
+  border-radius: 2vw;
+  height: 71vh;
+  width: 92vw;
+  /* background-color: #190f42; */
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    rgba(58, 108, 201, 0.32) 0%,
+    rgba(60, 55, 140, 0.4) 35%,
+    rgba(41, 28, 96, 0.55) 68%,
+    rgba(11, 16, 41, 0.72) 100%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(140, 190, 255, 0.45);
+  opacity: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(2rem, 15vw, 10rem);
+  font-family: "Chewy", sans-serif;
+  color: #ffcf39; /* 0%, #ff9700 45%, #ed5700*/
+  gap: 10vh;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(84, 145, 255, 0.18);
+}
+
+#game-over-title {
+  text-shadow: 0.2rem 1rem 0.1rem #ed5700;
+  -webkit-text-stroke: 2px #ed5700; /* #e6e610;*/
+  animation: floatingBounce 1s infinite ease-in-out;
+  margin: 0 auto;
+}
+
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
-
+  user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
-
+  text-decoration: none;
   background: radial-gradient(
     ellipse at 50% 45%,
     #304650 0%,
@@ -28,10 +80,12 @@ body {
 
 #app {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
 }
 
 /*************************
@@ -108,8 +162,7 @@ body {
   margin: 0 auto;
   padding: 2% 0;
 
-  animation: floatingBounce
-    5s ease-out infinite alternate;
+  animation: floatingBounce 5s ease-out infinite alternate;
 }
 
 /*************************
@@ -153,8 +206,7 @@ p.level {
     0 8px 18px rgba(0, 0, 0, 0.45),
     0 0 18px rgba(151, 76, 255, 0.35);
 
-  animation: floatinglvl
-    3s ease-in-out infinite alternate;
+  animation: floatinglvl 3s ease-in-out infinite alternate;
 }
 
 /*************************
@@ -219,12 +271,7 @@ p.level {
   min-height: 50px;
   padding: 8px 12px;
 
-  background: linear-gradient(
-    180deg,
-    #ffcf39 0%,
-    #ff9700 45%,
-    #ed5700 100%
-  );
+  background: linear-gradient(180deg, #ffcf39 0%, #ff9700 45%, #ed5700 100%);
 
   border: 4px solid #a94800;
   border-radius: 1000px;
@@ -243,6 +290,8 @@ p.level {
 
   cursor: pointer;
 
+  z-index: 11;
+
   transition:
     transform 0.12s ease,
     box-shadow 0.12s ease,
@@ -255,6 +304,56 @@ p.level {
 
 .btn-jouer:active {
   transform: translate(-50%, calc(-50% + 6px));
+
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.25),
+    0 2px 0 #853a00;
+}
+
+#btn-retry {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: clamp(10rem, 50vw, 20rem);
+  height: clamp(1rem, 10vh, 8rem); */
+  /*5vh;*/
+  /* min-height: 50px; */
+  padding: 1rem 6rem;
+  margin: 0 auto;
+
+  background: linear-gradient(180deg, #ffcf39 0%, #ff9700 45%, #ed5700 100%);
+
+  border: 4px solid #a94800;
+  border-radius: 1000px;
+
+  box-shadow:
+    inset 0 5px 3px rgba(255, 255, 255, 0.65),
+    inset 0 -7px 0 rgba(128, 48, 0, 0.35),
+    0 8px 0 #853a00,
+    0 13px 22px rgba(0, 0, 0, 0.3);
+
+  color: white;
+  font-family: "Chewy", sans-serif;
+  font-size: clamp(3rem, 20vw, 4rem);
+  font-weight: 900;
+  text-shadow: 0.1rem 0.5rem 0 #853a00;
+  -webkit-text-stroke: 0.1px #fe7003;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+#btn-retry:hover {
+  filter: brightness(1.1);
+}
+
+#btn-retry:active {
+  transform: translateY(calc(20%));
 
   box-shadow:
     inset 0 3px 8px rgba(0, 0, 0, 0.25),
@@ -279,8 +378,7 @@ p.level {
   font-size: clamp(0.8rem, 2vw, 1.5rem);
   font-weight: 900;
 
-  text-shadow:
-    0 2px 2px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
 }
 
 /*************************
@@ -291,8 +389,7 @@ p.level {
 .btn-scores {
   display: grid;
 
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   align-items: center;
 
@@ -327,7 +424,7 @@ p.level {
   align-items: center;
   justify-content: left;
   margin-left: 0.1rem;
- -webkit-text-stroke: 0.5px #1b0c05;
+  -webkit-text-stroke: 0.5px #1b0c05;
   position: relative;
   min-width: 0;
 
@@ -359,9 +456,9 @@ p.level {
   display: flex;
   margin: 0;
   align-items: center;
-  color:#fad818 ;
+  color: #fad818;
 }
-#div-scores #affichage-chrono{
+#div-scores #affichage-chrono {
   font-size: 1.2rem;
 }
 
@@ -390,8 +487,7 @@ p.level {
     #ad4800
   );
 
-  box-shadow:
-    0 0 5px #ffe6a0;
+  box-shadow: 0 0 5px #ffe6a0;
 }
 
 /*************************
@@ -466,6 +562,17 @@ p.level {
   #div-scores > div {
     padding: 1px;
   }
+  #overlay {
+    padding: 30vh 4vw;
+  }
+  #btn-retry {
+    min-width: 50vw;
+    min-height: 2vh;
+    font-size: clamp(1.5rem, 20vw, 3rem); /*3rem;*/
+  }
+  #game-over-title {
+    text-shadow: 0.1rem 0.8rem 0.1rem #ed5700;
+  }
 }
 
 @media (max-width: 600px) {
@@ -498,8 +605,19 @@ p.level {
   .btn-jouer {
     min-height: 45px;
   }
-  #div-scores #affichage-chrono{
+  #div-scores #affichage-chrono {
     margin-left: -0.7rem;
+  }
+  #overlay {
+    padding: 23vh 4vw;
+  }
+  #btn-retry {
+    min-width: 50vw;
+    min-height: 2vh;
+    font-size: 1.5rem;
+  }
+  #game-over-title {
+    text-shadow: 0.1rem 0.4rem 0.1rem #ed5700;
   }
 }
 
