@@ -3,6 +3,7 @@ import Ui from "./Ui.js";
 import Player from "./Player.js";
 import Renderer from "./Renderer.js";
 import World from "./World.js";
+import Background from "./Background.js";
 
 export default class Game {
 
@@ -10,14 +11,21 @@ export default class Game {
     static startPlay = false;
     static requestId = null;
 
-    static start() {
+    static async start() {
 
         Renderer.resize();
 
-        GameEvent.on("startPlay", (timestamp) => {
+        await Background.init(Renderer.width, Renderer.height);
+        await Player.init(Renderer.width, Renderer.height, Background.groundY);
+
+        Renderer.draw();
+
+        GameEvent.on("startPlay", async (timestamp) => {
             if (this.startPlay && !this.gameOver) return;
 
-            Player.init(Renderer.width, Renderer.height);
+            await Background.init(Renderer.width, Renderer.height);
+            await Player.init(Renderer.width, Renderer.height, Background.groundY);
+
             Ui.hideBtnPlay();
             Ui.hideOverlay();
 
@@ -47,6 +55,8 @@ export default class Game {
         if (!this.startPlay || this.gameOver) return;
 
         World.update(timestamp);
+
+        Background.update(World.deltaTime);
 
         Player.update(World.deltaTime, World.gravity);
 
