@@ -1,6 +1,8 @@
+import groundUrl from "../assets/lvl1/lvl1Sol.png";
+
 export default class Background {
     static spriteGround = new Image();
-    static spriteGroundUrl = './src/assets/lvl1Sol.png';
+    static spriteGroundUrl = groundUrl;
 
     static canvasWidth = 0;
     static canvasHeight = 0;

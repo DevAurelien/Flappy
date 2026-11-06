@@ -1,11 +1,12 @@
 import GameEvent from "./GameEvent.js";
+import playerUrl from  "../assets/heros/normalSprite.png";
 
 export default class Player {
 
     static sprite = new Image();
     static spriteSize = 256;
     static spritePos = 0;
-    static spritesUrl = './src/assets/heros/normalSprite.png';
+    static spritesUrl = playerUrl;
 
     static isDead = false;
 
