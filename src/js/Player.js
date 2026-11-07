@@ -1,142 +1,188 @@
+
 import GameEvent from "./GameEvent.js";
-import playerUrl from  "../assets/heros/normalSprite.png";
+import playerUrl from "../assets/heros/normalSprite.png";
 
 export default class Player {
 
     static sprite = new Image();
-    static spriteSize = 256;
-    static spritePos = 0;
-    static spritesUrl = playerUrl;
-
-    static isDead = false;
+    static spriteUrl = playerUrl;
+    static spriteFrameSize = 256;
+    static spriteFrameX = 0;
+    static displaySize = 100;
 
     static canvasWidth = 0;
     static canvasHeight = 0;
 
-    static sizeInCanvas = 100;
-
-    static animationTimer = 0;
-    static animationFrameDuration = 0.050; // 50 ms entre chaque frame
-    static spriteDirection = 1;
-
-    static isFinishingAnimation = false;
-
-    static repulse = 3;
-
     static x = 0;
     static y = 0;
 
-    static vx = 0;
-    static vy = 0;
+    static velocityY = 0;
+    static gravity = 0;
+    static bounceVelocity = 3;
 
-    static groundY = 0;
+    static groundLimitY = 0;
+    static groundMargin = 50;
 
-    static marginGround = 50;
+    static animationTimer = 0;
+    static animationFrameDuration = 0.050;
+    static animationDirection = 1;
+    static isAnimationReversing = false;
+
+    static isDead = false;
+
 
     static async init(width, height, groundY) {
-        this.vy = 0;
-        this.isDead = false;
-
         this.canvasWidth = width;
         this.canvasHeight = height;
-        this.groundY = groundY + this.marginGround;
+        this.groundLimitY = groundY + this.groundMargin;
+
+        this.resetState();
+
+        await this.loadSprite();
+
+        this.initPosition();
+    }
+
+    static async loadSprite() {
+        if (this.sprite.complete && this.sprite.naturalWidth > 0) {
+            return;
+        }
 
         await new Promise((resolve, reject) => {
             this.sprite.onload = resolve;
 
             this.sprite.onerror = () => {
-                reject(new Error("Impossible de charger le spritesUrl : " + this.spritesUrl));
+                reject(new Error(
+                    "Impossible de charger le sprite : " + this.spriteUrl
+                ));
             };
 
-            this.sprite.src = this.spritesUrl;
+            this.sprite.src = this.spriteUrl;
         });
+    }
 
-        this.initPosition();
+    static resetState() {
+        this.isDead = false;
+        this.velocityY = 0;
+
+        this.spriteFrameX = 0;
+
+        this.animationTimer = 0;
+        this.animationDirection = 1;
+        this.isAnimationReversing = false;
     }
 
     static initPosition() {
-        this.x = this.canvasWidth / 2 - this.sizeInCanvas / 2;
-        this.y = this.canvasHeight / 2 - this.sizeInCanvas / 2;
-    }
-
-    static draw(ctx) {
-
-        ctx.drawImage(
-            this.sprite,
-            this.spritePos, //sx
-            0, //sy
-            this.spriteSize, //sw
-            this.spriteSize, //sh
-            this.x, //dx
-            this.y, //dy
-            this.sizeInCanvas, //dw
-            this.sizeInCanvas //dw
-        );
+        this.x = this.canvasWidth / 2 - this.displaySize / 2;
+        this.y = this.canvasHeight / 2 - this.displaySize / 2;
     }
 
     static update(deltaTime, gravity) {
         if (this.isDead) return;
 
+        this.updateAnimation(deltaTime);
+        this.updatePhysics(deltaTime, gravity);
+        this.updateAnimationDirection();
+        this.checkCollisions();
+    }
+
+    static updatePhysics(deltaTime, gravity) {
         const frameScale = deltaTime * 60;
 
-        this.animationTimer += deltaTime;
+        this.velocityY += gravity * frameScale;
+        this.y += this.velocityY * frameScale;
+    }
 
-        if (this.isFinishingAnimation) {
-            if (this.animationTimer >= this.animationFrameDuration) {
-                this.animationTimer = 0;
-
-                this.spritePos += this.spriteSize * this.spriteDirection;
-
-                if (
-                    this.spritePos <= 0 ||
-                    this.spritePos >= this.sprite.width - this.spriteSize
-                ) {
-                    this.spritePos = Math.max(
-                        0,
-                        Math.min(this.spritePos, this.sprite.width - this.spriteSize)
-                    );
-
-                    this.isFinishingAnimation = false;
-                }
-            }
-        }
-
-        this.vy += gravity * frameScale;
-        this.y += this.vy * frameScale;
-
-        if (this.vy > 0 && !this.isFinishingAnimation) {
-            this.isFinishingAnimation = true;
-            this.spriteDirection = -1;
-        }
-
-        if (this.y + this.sizeInCanvas >= this.groundY) {
-            this.y = this.groundY - this.sizeInCanvas;
-            this.vy = 0;
-            this.die();
-        }
-
-        if (this.y < 0) {
-            this.y = 0;
-            this.vy = this.repulse;
+    static updateAnimationDirection() {
+        if (this.velocityY > 0 && !this.isAnimationReversing) {
+            this.isAnimationReversing = true;
+            this.animationDirection = -1;
         }
     }
 
+    static checkCollisions() {
+        if (this.checkGroundCollision()) return;
+
+        this.checkCeilingCollision();
+    }
+
+    static checkGroundCollision() {
+        if (this.y + this.displaySize < this.groundLimitY) {
+            return false;
+        }
+
+        this.y = this.groundLimitY - this.displaySize;
+        this.velocityY = 0;
+
+        this.die();
+
+        return true;
+    }
+
+    static checkCeilingCollision() {
+        if (this.y < 0) {
+            this.y = 0;
+            this.velocityY = this.bounceVelocity;
+        }
+    }
+
+    static updateAnimation(deltaTime) {
+        if (!this.isAnimationReversing) return;
+
+        this.animationTimer += deltaTime;
+
+        if (this.animationTimer < this.animationFrameDuration) return;
+
+        this.animationTimer = 0;
+
+        this.spriteFrameX += this.spriteFrameSize * this.animationDirection;
+
+        const lastFrameX = this.sprite.width - this.spriteFrameSize;
+
+        if (this.spriteFrameX <= 0 || this.spriteFrameX >= lastFrameX) {
+            this.spriteFrameX = Math.max(
+                0,
+                Math.min(this.spriteFrameX, lastFrameX)
+            );
+
+            this.isAnimationReversing = false;
+        }
+    }
+
+    static resetAnimation() {
+        this.spriteFrameX = this.sprite.width - this.spriteFrameSize;
+        this.animationDirection = 1;
+        this.isAnimationReversing = true;
+        this.animationTimer = 0;
+    }
+
+
+    static jump() {
+        if (this.isDead) return;
+
+        this.resetAnimation();
+        this.velocityY = -5;
+    }
 
     static die() {
         if (this.isDead) return;
 
         this.isDead = true;
+
         GameEvent.emit("playerDeath");
     }
 
-    static jump() {
-        if (this.isDead) return;
-
-        this.spritePos = this.sprite.width - this.spriteSize;
-        this.isFinishingAnimation = true;
-        this.spriteDirection = 1;
-
-        this.animationTimer = 0;
-        this.vy = -5;
+    static draw(ctx) {
+        ctx.drawImage(
+            this.sprite,
+            this.spriteFrameX,
+            0,
+            this.spriteFrameSize,
+            this.spriteFrameSize,
+            this.x,
+            this.y,
+            this.displaySize,
+            this.displaySize
+        );
     }
 }
