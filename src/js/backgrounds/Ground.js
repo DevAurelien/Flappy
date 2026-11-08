@@ -14,14 +14,10 @@ export default class Ground {
     static y = 0;
     static cloneX = 0;
 
-    // --- Movement ---
-    /** Ground movement speed */
-    static vx = 5;
-
     /** Image overlap */
     static imageOverlap = 0.80;
 
-    static async init(width, height) {
+    static async init(height) {
         await this.loadImage();
 
         this.y = height - this.image.height;
@@ -42,11 +38,11 @@ export default class Ground {
         });
     }
 
-    static update(deltaTime) {
+    static update(deltaTime, firstPlanVx) {
         const frameScale = deltaTime * 60;
 
-        this.x -= this.vx * frameScale;
-        this.cloneX -= this.vx * frameScale;
+        this.x -= firstPlanVx * frameScale;
+        this.cloneX -= firstPlanVx * frameScale;
 
         this.updateLoop();
     }
@@ -67,4 +63,17 @@ export default class Ground {
         ctx.drawImage(this.image, this.x, this.y);
         ctx.drawImage(this.image, this.cloneX, this.y);
     }
+
+    static drawAABBbox(ctx) {
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
+        ctx.rect(this.x, this.y, this.image.width, this.image.height);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
+        ctx.rect(this.cloneX, this.y, this.image.width, this.image.height);
+        ctx.fill();
+    }
+
 }

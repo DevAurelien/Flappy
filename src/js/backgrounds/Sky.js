@@ -14,14 +14,10 @@ export default class Sky {
     static y = 0;
     static cloneX = 0;
 
-    // --- Movement ---
-    /** Sky movement speed */
-    static vx = 1;
-
     /** Image overlap */
     static imageOverlap = 0.80;
 
-    static async init(width, height) {
+    static async init() {
         await this.loadImage();
 
         this.cloneX = this.x + this.image.width - this.imageOverlap;
@@ -41,11 +37,11 @@ export default class Sky {
         });
     }
 
-    static update(deltaTime) {
+    static update(deltaTime, skyVx) {
         const frameScale = deltaTime * 60;
 
-        this.x -= this.vx * frameScale;
-        this.cloneX -= this.vx * frameScale;
+        this.x -= skyVx * frameScale;
+        this.cloneX -= skyVx * frameScale;
 
         this.updateLoop();
     }

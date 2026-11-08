@@ -4,18 +4,21 @@ import playerUrl from "../assets/heros/normalSprite.png";
 
 export default class Player {
 
+    // --- Sprite ---
     static sprite = new Image();
     static spriteUrl = playerUrl;
     static spriteFrameSize = 256;
     static spriteFrameX = 0;
     static displaySize = 100;
 
+    // --- Position ---
     static canvasWidth = 0;
     static canvasHeight = 0;
 
     static x = 0;
     static y = 0;
 
+    // --- Physics ---
     static velocityY = 0;
     static gravity = 0;
     static bounceVelocity = 3;
@@ -23,11 +26,13 @@ export default class Player {
     static groundLimitY = 0;
     static groundMargin = 50;
 
+    // --- Animation ---
     static animationTimer = 0;
-    static animationFrameDuration = 0.050;
+    static animationFrameDuration = 0.05;
     static animationDirection = 1;
     static isAnimationReversing = false;
 
+    // --- State ---
     static isDead = false;
 
 
@@ -77,13 +82,15 @@ export default class Player {
         this.y = this.canvasHeight / 2 - this.displaySize / 2;
     }
 
+
+    // --- Update ---
+
     static update(deltaTime, gravity) {
         if (this.isDead) return;
 
         this.updateAnimation(deltaTime);
         this.updatePhysics(deltaTime, gravity);
         this.updateAnimationDirection();
-        this.checkCollisions();
     }
 
     static updatePhysics(deltaTime, gravity) {
@@ -100,31 +107,31 @@ export default class Player {
         }
     }
 
-    static checkCollisions() {
-        if (this.checkGroundCollision()) return;
 
-        this.checkCeilingCollision();
-    }
+    // --- Collision reactions ---
 
-    static checkGroundCollision() {
-        if (this.y + this.displaySize < this.groundLimitY) {
-            return false;
-        }
-
+    static hitGround() {
         this.y = this.groundLimitY - this.displaySize;
         this.velocityY = 0;
 
         this.die();
-
-        return true;
     }
 
-    static checkCeilingCollision() {
-        if (this.y < 0) {
-            this.y = 0;
-            this.velocityY = this.bounceVelocity;
-        }
+    static hitCeiling() {
+        this.y = 0;
+        this.velocityY = this.bounceVelocity;
     }
+
+    static die() {
+        if (this.isDead) return;
+
+        this.isDead = true;
+
+        GameEvent.emit("playerDeath");
+    }
+
+
+    // --- Animation ---
 
     static updateAnimation(deltaTime) {
         if (!this.isAnimationReversing) return;
@@ -157,6 +164,8 @@ export default class Player {
     }
 
 
+    // --- Controls ---
+
     static jump() {
         if (this.isDead) return;
 
@@ -164,13 +173,8 @@ export default class Player {
         this.velocityY = -5;
     }
 
-    static die() {
-        if (this.isDead) return;
 
-        this.isDead = true;
-
-        GameEvent.emit("playerDeath");
-    }
+    // --- Rendering ---
 
     static draw(ctx) {
         ctx.drawImage(
@@ -179,6 +183,16 @@ export default class Player {
             0,
             this.spriteFrameSize,
             this.spriteFrameSize,
+            this.x,
+            this.y,
+            this.displaySize,
+            this.displaySize
+        );
+    }
+
+    static drawAABBbox(ctx) {
+        ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
+        ctx.fillRect(
             this.x,
             this.y,
             this.displaySize,

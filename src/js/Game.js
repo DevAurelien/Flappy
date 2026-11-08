@@ -5,6 +5,7 @@ import Player from "./Player.js";
 import Renderer from "./Renderer.js";
 import World from "./World.js";
 import Background from "./Background.js";
+import CollisionManager from "./CollisionManager.js";
 
 export default class Game {
 
@@ -30,12 +31,12 @@ export default class Game {
     }
 
     static async initGame() {
-        await Background.init(Renderer.width, Renderer.height);
+        await Background.init(Renderer.height);
 
         await Player.init(
             Renderer.width,
             Renderer.height,
-            Background.groundY
+            Background.Ground.y
         );
     }
 
@@ -91,12 +92,29 @@ export default class Game {
         World.update(timestamp);
 
         Background.update(World.deltaTime);
-
         Player.update(World.deltaTime, World.gravity);
 
-        Renderer.draw();
+        CollisionManager.checkWorldBounds(Player);
 
+        const potentialCollisions = CollisionManager.getPotentialCollisions(
+            Player,
+            [Background.Moutain]
+        );
+
+        for (const object of potentialCollisions) {
+
+            if (CollisionManager.checkPixelPerfect(Player, object)) {
+
+                console.log("Pixel Perfect Collision !");
+
+                Player.die();
+                break;
+            }
+        }
+        
         if (this.gameOver) return;
+
+        Renderer.draw();
 
         this.requestId = requestAnimationFrame((timestamp) => {
             this.loop(timestamp);
