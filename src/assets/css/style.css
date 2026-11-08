@@ -9,13 +9,13 @@
 }
 
 #overlay {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   top: 0;
   left: 0;
   position: absolute;
   z-index: 10;
-  padding: 38vh 4vw;
+  /* padding: 17vh 4vw; */
   pointer-events: none;
   /* padding: 18vh 4vw; */
 }
@@ -24,10 +24,12 @@
 
 .cadre-overlay {
   pointer-events: auto;
-  border-radius: 2vw;
-  height: 71vh;
-  width: 92vw;
-  /* background-color: #190f42; */
+  border-radius: 38px;
+  /* height: 71vh;
+  width: 92vw; */
+  height: 100%;
+  width: 100%;
+  background-color: #190f42;
   background: radial-gradient(
     ellipse at 50% 35%,
     rgba(58, 108, 201, 0.32) 0%,
@@ -562,9 +564,9 @@ p.level {
   #div-scores > div {
     padding: 1px;
   }
-  #overlay {
+  /* #overlay {
     padding: 30vh 4vw;
-  }
+  } */
   #btn-retry {
     min-width: 50vw;
     min-height: 2vh;
@@ -577,6 +579,9 @@ p.level {
 
 @media (max-width: 600px) {
   #canvas {
+    border-radius: 20px;
+  }
+  .cadre-overlay {
     border-radius: 20px;
   }
 
@@ -608,9 +613,9 @@ p.level {
   #div-scores #affichage-chrono {
     margin-left: -0.7rem;
   }
-  #overlay {
-    padding: 23vh 4vw;
-  }
+  /* #overlay {
+    padding: 30vh 4vw;
+  } */
   #btn-retry {
     min-width: 50vw;
     min-height: 2vh;
