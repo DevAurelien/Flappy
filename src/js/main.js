@@ -13,8 +13,8 @@ Ui.overlay.addEventListener("click", (e) => {
     if (e.target.id === "btn-retry") {
         GameEvent.emit("startPlay", performance.now());
     }
-})
+});
 
 Renderer.canvas.addEventListener("click", () => {
     GameEvent.emit("playerJump");
-})
+});

@@ -1,3 +1,4 @@
+import Background from "./Background";
 import Player from "./Player";
 
 export default class Renderer {
@@ -38,7 +39,7 @@ export default class Renderer {
      */
     static draw() {
         this.ctx.clearRect(0, 0, this.width, this.height);
-
+        Background.draw(this.ctx);
         Player.draw(this.ctx);
     }
 }
