@@ -4,7 +4,7 @@ const chronoElement = document.getElementById("affichage-chrono");
 const distanceElement = document.getElementById("affichage-distance");
 import GameEvent from "./GameEvent";
 
-export default class Score {  //TODO : appeler saveToLocalStorage au moment de l'event LevelCompleted aussi plus tard pour save
+export default class Score {  //TODO: appeler saveToLocalStorage au moment de l'event LevelCompleted aussi plus tard pour save
   //   [
   //   {
   //     "date": 1793452800000,  // json de tentatives en localStorage, a filtrer et a mapper dessus
@@ -107,21 +107,16 @@ export default class Score {  //TODO : appeler saveToLocalStorage au moment de l
     scoreElement.textContent = this.currentScore;
   } // En cours d'etude ....voir pour les points des bonus et malus
 
-static loadFromLocalStorage() {
+static loadFromLocalStorage() { // a separer en deux fonctions distinctes, car save != calculer le score 
   const data = JSON.parse(localStorage.getItem("DataJoueur") || "[]");
-
   if (!Array.isArray(data)) return;
-
   const tentatives = data.filter(
     tentative => tentative.niveau === this.currentLevel
   );
-
   if (tentatives.length === 0) return;
-
   const best = tentatives.reduce((meilleur, tentative) =>
     tentative.score > meilleur.score ? tentative : meilleur
   );
-
   this.bestDate = best.date;
   this.bestScore = best.score;
   this.bestDistance = best.distance;
@@ -144,3 +139,4 @@ static loadFromLocalStorage() {
     localStorage.setItem("DataJoueur", JSON.stringify(data));
   }
 }
+

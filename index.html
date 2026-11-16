@@ -11,12 +11,17 @@
       href="https://fonts.googleapis.com/css2?family=Chewy&display=swap"
       rel="stylesheet"
     />
+
     <title>Flappy</title>
   </head>
   <body>
+    <baliseAudio
+      ><audio class="ambiance"></audio>
+      ><audio class="ambiance"></audio>
+       <audio class="son_player"></audio>
+      </baliseAudio>
     <!-- <h1>Flappy Dimensions</h1> -->
     <div id="app">
-      
       <img class="titre" src="/titre.png" alt="Logo Flappy Dimensions" />
       <!-- <div id="overlay"></div> -->
       <div class="container">
@@ -33,28 +38,31 @@
             <div id="div-scores">
               <div id="score">
                 <img src="./src/assets/scores/etoile.png" alt="Etoile" />
-                <span>SCORE</span><p id="affichage-score">125</p><span> points</span>
+                <span>SCORE</span>
+                <p id="affichage-score">125</p>
+                <span> points</span>
               </div>
               <div id="distance">
                 <img src="./src/assets/scores/drapeau.png" alt="Drapeau" />
-                <span>DISTANCE</span><p id="affichage-distance">125</p><span> m</span>
+                <span>DISTANCE</span>
+                <p id="affichage-distance">125</p>
+                <span> m</span>
               </div>
               <div id="temps">
                 <img src="./src/assets/scores/chrono.png" alt="Chrono" />
-                <span>TEMPS</span><p id="affichage-chrono">00:00:00</p>
+                <span>TEMPS</span>
+                <p id="affichage-chrono">00:00:00</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="./src/js/main.js"></script>
     <!-- <script type="module" src="/src/js/mainAurelien.js"></script> -->
   </body>
 </html>
 
-
 <!-- 5120 px x 256 px format des frames        -->
 <!-- 2172 px x 724 px format des background    -->
 <!-- 2172 px x 71 px format des sols          -->
-

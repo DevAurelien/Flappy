@@ -1,52 +1,43 @@
-import groundUrl from "../assets/lvl1/lvl1Sol.png";
+
+import Ground from "./backgrounds/Ground.js";
+import Moutain from "./backgrounds/Moutain.js";
+import Sky from "./backgrounds/Sky.js";
 
 export default class Background {
-    static spriteGround = new Image();
-    static spriteGroundUrl = groundUrl;
 
-    static canvasWidth = 0;
-    static canvasHeight = 0;
+    static firstPlanVx = 5;
 
-    static groundX = 0;
-    static groundY = 0;
+    static skyVx = 1;
 
-    static vx = 1;
-
-    static async init(width, height) {
-        this.canvasWidth = width;
-        this.canvasHeight = height;
-
-        await new Promise((resolve, reject) => {
-            this.spriteGround.onload = resolve;
-
-            this.spriteGround.onerror = () => {
-                reject(new Error("Impossible de charger le spriteGround : " + this.spriteGroundUrl));
-            };
-
-            this.spriteGround.src = this.spriteGroundUrl;
-        });
-
-        this.groundY = this.canvasHeight - this.spriteGround.height;
+    static get Ground(){
+        return Ground;
     }
 
-    static draw(ctx) {
-        this.drawGround(ctx);
+    static get Moutain(){
+        return Moutain;
     }
 
-    static drawGround(ctx) {
-
-        ctx.drawImage(
-            this.spriteGround,
-            this.groundX,
-            this.groundY,
-            this.spriteGround.width,
-            this.spriteGround.height
-        );
+    static async init(height) {
+        await Ground.init(height);
+        await Sky.init();
+        await Moutain.init(Ground.y);
     }
 
     static update(deltaTime) {
-        const frameScale = deltaTime * 60;
+        Sky.update(deltaTime, this.skyVx);
+        Ground.update(deltaTime, this.firstPlanVx);
+        Moutain.update(deltaTime, this.firstPlanVx);
 
-        this.groundX -= this.vx * frameScale;
+    }
+
+    static draw(ctx) {
+        Sky.draw(ctx);
+        Ground.draw(ctx);
+        Moutain.draw(ctx);
+    }
+
+    static drawAABBbox(ctx) {
+        Ground.drawAABBbox(ctx);
+        Moutain.drawAABBbox(ctx);
     }
 }
