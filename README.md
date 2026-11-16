@@ -2,6 +2,8 @@
 
 ![FlappyDimensions](./src/assets/img/Écran%20de%20jeu%20Dimensions%20_%20chevalier%20volant.png)
 
+[Live Preview](https://devaurelien.github.io/Flappy)
+
 **Flappy Dimensions** est un jeu d'arcade 2D sur navigateur, développé à deux par **DevAurelien (Aurélien)** et **Tosbas (Thomas)**.
 
 Le principe est volontairement simple : piloter un chevalier équipé d'un jetpack, éviter des obstacles qui défilent de droite à gauche et obtenir le meilleur score possible. Le jeu reprend le fonctionnement de *Flappy Bird* avec des décors fantastiques, plusieurs niveaux et des objets à ramasser qui modifient temporairement la physique.

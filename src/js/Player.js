@@ -1,7 +1,6 @@
 import GameEvent from "./GameEvent.js";
 import playerUrl from "../assets/heros/normalSprite.png";
 
-
 export default class Player {
 
     // --- Sprite ---

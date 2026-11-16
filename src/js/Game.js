@@ -32,7 +32,9 @@ export default class Game {
 
         this.registerEvents();
         
-        Audio.playAmbianceSound(0);  // Musique du Menu de base avant le jeu
+        Audio.init();
+        Audio.playAmbianceSound(Audio.baliseMenu , 0);  // Musique du Menu de base avant le jeu
+        Audio.fadeIn(baliseMenu, 3000, Audio.volumeMax);
     }
 
     static async initGame() {
