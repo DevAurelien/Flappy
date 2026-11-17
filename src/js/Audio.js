@@ -22,12 +22,12 @@ export default class Audio {
   static volumeMax = 0.3;
   static volumeJoueur = 0.2;
   static volumeMin = 0;
-  static jetpackTimers = [];
+  static transitionTimers = [];
   static jetpackTimer = null;
   static jetpackEnMontee = false;
 
   static init() {
-    baliseMenu.volume = this.volumeMax;
+    baliseMenu.volume = 0;
     baliseNiv1.volume = 0;
     baliseNiv2.volume = 0;
     baliseNiv3.volume = 0;
@@ -38,7 +38,7 @@ export default class Audio {
       baliseNiv1.volume = this.volumeMin;
       this.playAmbianceSound(baliseNiv1, 1);
       this.fadeIn(baliseNiv1, 5000, this.volumeMax);
-      this.jetpackTimers.push(
+      this.transitionTimers.push(
       setTimeout(() => {
         this.fadeOut(baliseMenu, 1000, this.volumeMin);
       }, 1000),
@@ -57,7 +57,7 @@ export default class Audio {
           item != baliseMenu,
       );
       if (audioEnCours) {
-        this.jetpackTimers.push(
+        this.transitionTimers.push(
         setTimeout(() => {
           this.fadeOut(audioEnCours, 1000, this.volumeMin);
         }, 500),
@@ -185,7 +185,7 @@ export default class Audio {
     baliseHtmlAudio.requestId = requestAnimationFrame(animate);
   }
   static annulerTransitions() {
-  this.jetpackTimers.forEach(clearTimeout);
-  this.jetpackTimers = [];
+  this.transitionTimers.forEach(clearTimeout);
+  this.transitionTimers = [];
 }
 }

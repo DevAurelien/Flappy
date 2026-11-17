@@ -1,4 +1,3 @@
-
 import GameEvent from "./GameEvent.js";
 import playerUrl from "../assets/heros/normalSprite.png";
 
@@ -168,9 +167,10 @@ export default class Player {
 
     static jump() {
         if (this.isDead) return;
-
+        
         this.resetAnimation();
         this.velocityY = -5;
+
     }
 
 

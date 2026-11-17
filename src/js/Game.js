@@ -1,4 +1,3 @@
-
 import GameEvent from "./GameEvent.js";
 import Ui from "./Ui.js";
 import Player from "./Player.js";
@@ -6,6 +5,7 @@ import Renderer from "./Renderer.js";
 import World from "./World.js";
 import Background from "./Background.js";
 import CollisionManager from "./CollisionManager.js";
+import Audio from "./Audio.js";
 
 export default class Game {
 
@@ -25,9 +25,14 @@ export default class Game {
 
         await this.initGame();
 
+        Audio.init();  // lancement de l'audio
+                     
         Renderer.draw();
 
         this.registerEvents();
+
+        Audio.playAmbianceSound(Audio.baliseMenu , 0);  // Musique du Menu de base avant le jeu
+        Audio.fadeIn(Audio.baliseMenu, 3000, Audio.volumeMax);
     }
 
     static async initGame() {
@@ -67,7 +72,6 @@ export default class Game {
         if (this.isStarting || (this.startPlay && !this.gameOver)) return;
 
         this.isStarting = true;
-
         try {
             await this.initGame();
 
