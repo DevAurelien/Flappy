@@ -88,10 +88,10 @@ Une branche `main` conserve la version stable ; des branches de fonctionnalité 
 Le projet redémarre sur un nouveau dépôt. Les premiers visuels (chevalier, ciel et obstacles) servent de base graphique ; le gameplay sera reconstruit progressivement.
 
 - [X] Créer le nouveau dépôt et installer Vite
-- [ ] Afficher le ciel, le sol et le personnage dans Canvas
-- [ ] Implémenter gravité et impulsion
+- [X] Afficher le ciel, le sol et le personnage dans Canvas
+- [X] Implémenter gravité et impulsion
 - [ ] Faire défiler le décor et les obstacles
-- [ ] Détecter les collisions et gérer Game Over / Rejouer
+- [X] Détecter les collisions et gérer Game Over / Rejouer
 - [ ] Ajouter le score
 - [ ] Ajouter bonus et malus
 - [ ] Ajouter les niveaux suivants

@@ -16,18 +16,20 @@
   </head>
   <body>
     <baliseAudio
-      ><audio paused class="menu"></audio>
-      ><audio paused class="niv1"></audio>
-      ><audio paused class="niv2"></audio>
-      ><audio paused class="niv3"></audio>
+      ><audio paused class="menu"></audio> ><audio paused class="niv1"></audio>
+      ><audio paused class="niv2"></audio> ><audio paused class="niv3"></audio>
       ><audio paused class="niv4"></audio>
-       <audio class="son-player"></audio>
-      </baliseAudio>
+      <audio class="son-player"></audio>
+      <audio class="bruitages"></audio>
+    </baliseAudio>
     <!-- <h1>Flappy Dimensions</h1> -->
     <div id="app">
       <img class="titre" src="/titre.png" alt="Logo Flappy Dimensions" />
       <!-- <div id="overlay"></div> -->
       <div class="container">
+        <button id="div-parameter">
+          <img id="image-param" src="./src/assets/img/params.svg" alt="Paramètres" />
+        </button>
         <div class="game-container">
           <div id="overlay"></div>
           <canvas id="canvas"></canvas>
@@ -62,10 +64,5 @@
       </div>
     </div>
     <script type="module" src="./src/js/main.js"></script>
-    <!-- <script type="module" src="/src/js/mainAurelien.js"></script> -->
   </body>
 </html>
-
-<!-- 5120 px x 256 px format des frames        -->
-<!-- 2172 px x 724 px format des background    -->
-<!-- 2172 px x 71 px format des sols          -->

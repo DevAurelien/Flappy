@@ -1,5 +1,6 @@
 import GameEvent from "./GameEvent.js";
 import playerUrl from "../assets/heros/normalSprite.png";
+import Audio from "./Audio.js";
 
 export default class Player {
 
@@ -119,6 +120,7 @@ export default class Player {
     static hitCeiling() {
         this.y = 0;
         this.velocityY = this.bounceVelocity;
+        Audio.playBruitagesSound();
     }
 
     static die() {
