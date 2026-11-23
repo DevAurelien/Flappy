@@ -1,3 +1,6 @@
+import Renderer from "../../Renderer";
+import Ground from "../Ground";
+
 export default class MountainsTop {
     // --- Sprite ---
     /** Moutain image */
@@ -8,12 +11,12 @@ export default class MountainsTop {
     static x = 0;
     static y = 0;
 
-    static randomNumber;
+    static randomNumberX;
+    static randomNumberY;
 
-    static async init(randomNumber) {
-        this.randomNumber = randomNumber;
+    static async init() {
         await this.loadImage(this.generateRandomImage());
-        this.x = this.randomNumber;
+
     }
 
     static loadImage(generateRandomImage) {
@@ -28,7 +31,11 @@ export default class MountainsTop {
 
             this.image.src = generateRandomImage;
 
-            this.x = this.randomNumber;
+            this.randomNumberX = Math.random() * Renderer.canvas.width + Renderer.canvas.width;
+            this.randomNumberY = Math.random() * (Ground.y - this.image.height);
+
+            this.x = this.randomNumberX;
+            this.y = this.randomNumberY;
         });
     }
 
@@ -43,7 +50,6 @@ export default class MountainsTop {
     static async updateLoop() {
         if (this.x + this.image.width < 0) {
             await this.loadImage(this.generateRandomImage());
-            this.y = 10;
         }
     }
 

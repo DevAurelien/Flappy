@@ -20,6 +20,7 @@ export default class Sky {
     static async init() {
         await this.loadImage();
 
+        this.x = 0;
         this.cloneX = this.x + this.image.width - this.imageOverlap;
     }
 

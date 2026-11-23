@@ -1,3 +1,5 @@
+import Renderer from "../../Renderer";
+
 export default class MountainsBottom {
     // --- Sprite ---
     /** Moutain image */
@@ -12,11 +14,10 @@ export default class MountainsBottom {
 
     static imageOverlap = 35;
 
-    static randomNumber;
+    static randomNumberX;
 
-    static async init(height, randomNumber) {
+    static async init(height) {
         this.groundY = height;
-        this.randomNumber = randomNumber;
         await this.loadImage(this.generateRandomImage());
         this.y = height - this.image.height + this.imageOverlap;
     }
@@ -33,7 +34,8 @@ export default class MountainsBottom {
 
             this.image.src = generateRandomImage;
 
-            this.x = this.randomNumber;
+            this.randomNumberX = Math.random() * Renderer.canvas.width +Renderer.canvas.width ;
+            this.x = this.randomNumberX;
         });
     }
 

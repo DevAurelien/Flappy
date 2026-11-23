@@ -13,13 +13,12 @@ export default class Mountains {
     static get MountainsBottom() {
         return MountainsBottom;
     }
-    
-    static randomNumber; 
+
 
     static async init(height) {
-        MountainsBottom.init(height, this.randomNumber);
-        MountainsTop.init(this.randomNumber);
-        this.randomNumber = Math.random() * window.innerWidth + Renderer.width;
+        await MountainsBottom.init(height);
+        await MountainsTop.init();
+       
     }
 
     static draw(ctx) {
