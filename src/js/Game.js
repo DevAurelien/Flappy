@@ -98,7 +98,7 @@ export default class Game {
 
     const potentialCollisions = CollisionManager.getPotentialCollisions(
       Player,
-      [Background.Moutain],
+      [Background.Mountains.MountainsBottom, Background.Mountains.MountainsTop],
     );
 
     for (const object of potentialCollisions) {

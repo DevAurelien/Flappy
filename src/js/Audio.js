@@ -22,7 +22,7 @@ export default class Audio {
   static baliseNiv3 = baliseNiv3;
   static baliseNiv4 = baliseNiv4;
   static volumeCurseur = 0.1;
-  // static volumeCurseur = 0; // pour qu'il ferme sa bouche quand on debug
+  static volumeCurseur = 0; // pour qu'il ferme sa bouche quand on debug
   static volumeJoueur = 0.2;
   static volumeMax = 1;
   static volumeMin = 0;

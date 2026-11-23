@@ -59,9 +59,7 @@ export default class Sky {
     }
 
     static draw(ctx) {
-        // ctx.drawImage(this.image, this.x, this.y);
         ctx.drawImage(this.image, this.x, ctx.canvas.height - this.image.height);
-        // ctx.drawImage(this.image, this.cloneX, this.y);
         ctx.drawImage(this.image, this.cloneX, ctx.canvas.height - this.image.height);
     }
 }

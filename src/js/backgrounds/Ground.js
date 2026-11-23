@@ -21,6 +21,7 @@ export default class Ground {
         await this.loadImage();
 
         this.y = height - this.image.height;
+        this.x = 0;
         this.cloneX = this.x + this.image.width - this.imageOverlap;
     }
 

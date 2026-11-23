@@ -1,6 +1,6 @@
 
 import Ground from "./backgrounds/Ground.js";
-import Moutain from "./backgrounds/Moutain.js";
+import Mountains from "./backgrounds/Mountain.js";
 import Sky from "./backgrounds/Sky.js";
 
 export default class Background {
@@ -9,35 +9,36 @@ export default class Background {
 
     static skyVx = 1;
 
-    static get Ground(){
+    static get Ground() {
         return Ground;
     }
 
-    static get Moutain(){
-        return Moutain;
+    static get Mountains() {
+        return Mountains;
     }
 
     static async init(height) {
         await Ground.init(height);
         await Sky.init();
-        await Moutain.init(Ground.y);
+        await Mountains.init(Ground.y);
     }
 
     static update(deltaTime) {
         Sky.update(deltaTime, this.skyVx);
         Ground.update(deltaTime, this.firstPlanVx);
-        Moutain.update(deltaTime, this.firstPlanVx);
+        Mountains.update(deltaTime, this.firstPlanVx);
 
     }
 
     static draw(ctx) {
+
         Sky.draw(ctx);
         Ground.draw(ctx);
-        Moutain.draw(ctx);
+        Mountains.draw(ctx);
+        
     }
 
     static drawAABBbox(ctx) {
         Ground.drawAABBbox(ctx);
-        Moutain.drawAABBbox(ctx);
     }
 }

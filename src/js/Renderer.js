@@ -39,8 +39,9 @@ export default class Renderer {
      */
     static draw() {
         this.ctx.clearRect(0, 0, this.width, this.height);
-        // Background.drawAABBbox(this.ctx);
+
         Background.draw(this.ctx);
+        // Background.drawAABBbox(this.ctx);
         // Player.drawAABBbox(this.ctx);
         Player.draw(this.ctx);
     }

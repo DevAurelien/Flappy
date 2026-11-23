@@ -109,10 +109,13 @@ export default class CollisionManager {
 
 
 
-    static checkPixelPerfect(objectA, objectB) {
+    static checkPixelPerfect(objectA, objectB, offset = 0) {
 
         const a = this.getAABB(objectA);
         const b = this.getAABB(objectB);
+
+        a.x += offset;
+        a.y += offset;
 
         const left = Math.max(a.x, b.x);
         const right = Math.min(a.x + a.width, b.x + b.width);
@@ -136,7 +139,6 @@ export default class CollisionManager {
         const endY = Math.ceil(bottom);
 
         for (let y = startY; y < endY; y++) {
-
             for (let x = startX; x < endX; x++) {
 
                 const worldX = x + 0.5;
@@ -158,10 +160,10 @@ export default class CollisionManager {
                 const indexA = (ay * a.width + ax) * 4;
                 const indexB = (by * b.width + bx) * 4;
 
-                const alphaA = pixelsA[indexA + 3];
-                const alphaB = pixelsB[indexB + 3];
-
-                if (alphaA > 20 && alphaB > 20) {
+                if (
+                    pixelsA[indexA + 3] > 20 &&
+                    pixelsB[indexB + 3] > 20
+                ) {
                     return true;
                 }
             }
